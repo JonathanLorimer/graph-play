@@ -1,0 +1,8 @@
+cradle:
+  cabal:
+    - path: "./src"
+      component: "lib:graph-play"
+    - path: "./test"
+      component: "test:graph-play-tests"
+    - path: "./app"
+      component: "exe:graph-play"

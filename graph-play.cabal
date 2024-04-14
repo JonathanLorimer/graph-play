@@ -1,0 +1,95 @@
+cabal-version: 3.4
+name:          graph-play
+version:       0.0.0.0
+
+-- synopsis:       $synopsis
+-- description:    $description
+-- category:       $category
+-- homepage:       $gitrepo#readme
+-- bug-reports:    $gitrepo/issues
+-- maintainer:     $maintainer
+build-type:    Simple
+
+-- source-repository head
+--   type: git
+--   location: $gitrepo
+
+common common-opts
+  default-extensions:
+    BlockArguments
+    DeriveAnyClass
+    DeriveFunctor
+    DeriveGeneric
+    DerivingStrategies
+    DerivingVia
+    GADTs
+    GeneralizedNewtypeDeriving
+    ImportQualifiedPost
+    InstanceSigs
+    KindSignatures
+    LambdaCase
+    MultiParamTypeClasses
+    MultiWayIf
+    NamedFieldPuns
+    NumericUnderscores
+    OverloadedRecordDot
+    OverloadedStrings
+    RecordWildCards
+    ScopedTypeVariables
+    TupleSections
+    TypeApplications
+
+  build-depends:
+    , algebraic-graphs
+    , base
+    , bytestring
+    , containers
+    , megaparsec
+    , text
+    , unordered-containers
+
+  default-language:   Haskell2010
+
+library
+  import:          common-opts
+
+  -- cabal-fmt: expand src
+  exposed-modules:
+    Core
+    Graph.Parse
+    Graph.Print
+    Graph.Utils
+
+  hs-source-dirs:  src
+
+executable graph-play
+  import:         common-opts
+  main-is:        Main.hs
+  hs-source-dirs: app
+  build-depends:  graph-play
+
+test-suite graph-play-tests
+  import:         common-opts
+  type:           exitcode-stdio-1.0
+  hs-source-dirs: test
+  ghc-options:
+    -Wall -threaded -rtsopts -with-rtsopts=-N -fdefer-typed-holes -O0
+
+  main-is:        Main.hs
+
+  -- cabal-fmt: expand test -Main
+  other-modules:
+    Graph.G01ParsePrintSpec
+    Property
+    Spec
+    TestUtils
+
+  build-depends:
+    , graph-play
+    , hedgehog
+    , hspec
+    , hspec-core
+    , hspec-discover
+    , hspec-expectations
+    , hspec-hedgehog
+    , HUnit
